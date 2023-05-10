@@ -1,0 +1,9 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: feign-provider # 服务名
+eureka:
+  client:
+    service-url: # EurekaServer地址
+      defaultZone: http://127.0.0.1:10086/eureka/
