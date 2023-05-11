@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: feign-consumer  # 微服务名称
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000   # 设置Feign客户端连接提供者的超时时限
+        readTimeout: 5000  # 设置Feign从请求发出到接收到提供者的响应，这段时间的超时时限
+#    url: http://127.0.0.1:8081   #客户端提供feign服务ip
+  hystrix:
+    enabled: true # 开启Feign的熔断功能
+    command:
+      default:
+        execution.isolation.thread.timeoutInMilliseconds: 2000
+        circuitBreaker:
+          errorThresholdPercentage: 50 # 触发熔断错误比例阈值，默认值50%
+          sleepWindowInMilliseconds: 10000 # 熔断后休眠时长，默认值5秒
+          requestVolumeThreshold: 10 # 触发熔断的最小请求次数，默认20
+eureka:
+  client:
+    service-url: # EurekaServer地址
+      defaultZone: http://127.0.0.1:10086/eureka/
+  instance:
+    prefer-ip-address: true #偏好使用ip地址，而不是host主机名
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}.${eureka.instance.ip-address}.${server.port}
