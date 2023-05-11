@@ -18,3 +18,13 @@ eureka:
     prefer-ip-address: true #偏好使用ip地址，而不是host主机名
     ip-address: 127.0.0.1
     instance-id: ${spring.application.name}.${eureka.instance.ip-address}.${server.port}
+
+
+feign-provider: # 服务名
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule  # 选择负载均衡策略，默认为轮询方式，当前配置为随机方式
+    ConnectTimeout: 250                 # 连接超时时间
+    ReadTimeout: 1000                   # ribbon 读取超时时间
+    OkToRetryOnAllOperations: true      # 是否对所有操作都进行重试
+    MaxAutoRetriesNextServer: 1         # 切换实例的重试次数
+    MaxAutoRetries: 1                   # 对当前实例的重试次数
