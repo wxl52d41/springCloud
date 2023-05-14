@@ -1,0 +1,22 @@
+server:
+  port: 10010
+
+eureka:
+  client:
+    service-url: # EurekaServer地址
+      defaultZone: http://127.0.0.1:10086/eureka/
+  instance:
+    prefer-ip-address: true #偏好使用ip地址，而不是host主机名
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}.${eureka.instance.ip-address}.${server.port}
+
+spring:
+  application:
+    name: gateway-server # 服务名
+  cloud:
+    gateway:
+      routes: #路由规则的列表,可以有多个
+        - id: feign-consumer # 当前路由的唯一标识
+          uri: lb://feign-consumer  # 路由的目标微服务,lb:代表负载均衡，feign-consumer:代表服务id
+          predicates: # 断言，定义请求的匹配规则
+            - Path=/consumer/** # Path代表按照路径匹配的规则，/consumer/**是指路径必须以/consumer开头
