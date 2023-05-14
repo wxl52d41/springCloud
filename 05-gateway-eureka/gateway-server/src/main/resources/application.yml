@@ -20,3 +20,12 @@ spring:
           uri: lb://feign-consumer  # 路由的目标微服务,lb:代表负载均衡，feign-consumer:代表服务id
           predicates: # 断言，定义请求的匹配规则
             - Path=/consumer/** # Path代表按照路径匹配的规则，/consumer/**是指路径必须以/consumer开头
+      default-filters: # 默认过滤项
+        - name: Hystrix # 指定过滤工厂名称（可以是任意过滤工厂类型）
+          args: # 指定过滤的参数
+            name: fallbackcmd  # hystrix的指令名
+            fallbackUri: forward:/fallbackTest # 失败后的跳转路径
+hystrix:
+    command:
+      default:
+        execution.isolation.thread.timeoutInMilliseconds: 1000 # 失败超时时长

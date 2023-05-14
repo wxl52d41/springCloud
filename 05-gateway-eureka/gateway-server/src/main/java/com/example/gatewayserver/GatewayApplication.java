@@ -2,6 +2,7 @@ package com.example.gatewayserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 /**
  * @ClassName: GatewayApplication
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Author: wang xiao le
  * @Date: 2023/05/14 16:20
  **/
+@EnableHystrix
 @SpringBootApplication
 public class GatewayApplication {
     public static void main(String[] args) {
