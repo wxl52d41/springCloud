@@ -1,0 +1,12 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: gateway-server # 服务名
+  cloud:
+    gateway:
+      routes: #路由规则的列表,可以有多个
+        - id: consumer-service # 当前路由的唯一标识
+          uri: http://127.0.0.1:8080 # 路由的目标微服务地址
+          predicates: # 断言，定义请求的匹配规则
+            - Path=/consumer/** # Path代表按照路径匹配的规则，/consumer/**是指路径必须以/consumer开头
