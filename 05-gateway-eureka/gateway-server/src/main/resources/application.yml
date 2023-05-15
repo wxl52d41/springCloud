@@ -46,6 +46,13 @@ spring:
           args: # 指定过滤的参数
             name: fallbackcmd  # hystrix的指令名
             fallbackUri: forward:/fallbackTest # 失败后的跳转路径
+        - name: RequestRateLimiter #请求数限流 名字不能随便写
+          args:
+            key-resolver: "#{@ipKeyResolver}" # 指定一个key生成器
+            redis-rate-limiter.replenishRate: 2 # 生成令牌的速率
+            redis-rate-limiter.burstCapacity: 2 # 桶的容量
+  redis:
+    host: 139.9.141.175
 
 
 hystrix:
