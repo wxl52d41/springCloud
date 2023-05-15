@@ -9,7 +9,27 @@ eureka:
     prefer-ip-address: true #偏好使用ip地址，而不是host主机名
     ip-address: 127.0.0.1
     instance-id: ${spring.application.name}.${eureka.instance.ip-address}.${server.port}
+# Hystrix配置
 
+#spring:
+#  application:
+#    name: gateway-server # 服务名
+#  cloud:
+#    gateway:
+#      routes: #路由规则的列表,可以有多个
+#        - id: feign-consumer # 当前路由的唯一标识
+#          uri: lb://feign-consumer  # 路由的目标微服务,lb:代表负载均衡，feign-consumer:代表服务id
+#          predicates: # 断言，定义请求的匹配规则
+#            - Path=/consumer/** # Path代表按照路径匹配的规则，/consumer/**是指路径必须以/consumer开头
+#      default-filters: # 默认过滤项
+#        - name: Hystrix # 指定过滤工厂名称（可以是任意过滤工厂类型）
+#          args: # 指定过滤的参数
+#            name: fallbackcmd  # hystrix的指令名
+#            fallbackUri: forward:/fallbackTest # 失败后的跳转路径
+
+
+
+# 路由前缀配置
 spring:
   application:
     name: gateway-server # 服务名
@@ -19,12 +39,16 @@ spring:
         - id: feign-consumer # 当前路由的唯一标识
           uri: lb://feign-consumer  # 路由的目标微服务,lb:代表负载均衡，feign-consumer:代表服务id
           predicates: # 断言，定义请求的匹配规则
-            - Path=/consumer/** # Path代表按照路径匹配的规则，/consumer/**是指路径必须以/consumer开头
+            - Path=/feign-consumer/** # Path代表按照路径匹配的规则，feign-consumer：代表服务id。/feign-consumer/**是指路径必须以/feign-consumer
+          filters:
+            - StripPrefix=1  # 去除用作路由的1个前缀
       default-filters: # 默认过滤项
-        - name: Hystrix # 指定过滤工厂名称（可以是任意过滤工厂类型）
+        - name: feign-consumer # 指定过滤工厂名称（可以是任意过滤工厂类型）
           args: # 指定过滤的参数
             name: fallbackcmd  # hystrix的指令名
             fallbackUri: forward:/fallbackTest # 失败后的跳转路径
+
+
 hystrix:
     command:
       default:
