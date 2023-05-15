@@ -43,7 +43,7 @@ spring:
           filters:
             - StripPrefix=1  # 去除用作路由的1个前缀
       default-filters: # 默认过滤项
-        - name: feign-consumer # 指定过滤工厂名称（可以是任意过滤工厂类型）
+        - name: Hystrix # 指定过滤工厂名称（可以是任意过滤工厂类型）
           args: # 指定过滤的参数
             name: fallbackcmd  # hystrix的指令名
             fallbackUri: forward:/fallbackTest # 失败后的跳转路径
